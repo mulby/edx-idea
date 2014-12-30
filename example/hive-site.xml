@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+ 
+<configuration>
+ 
+<property>
+  <name>hive.exec.scratchdir</name>
+  <value>/tmp/hive-${user.name}</value>
+  <description>Scratch space for Hive jobs</description>
+</property>
+ 
+<property>
+  <name>fs.default.name</name>
+  <value>file:///tmp/spark</value>
+  <description></description>
+</property>
+
+<property>
+  <name>hive.exec.dynamic.partition.mode</name>
+  <value>nonstrict</value>
+  <description></description>
+</property>
+
+<property>
+  <name>hive.metastore.warehouse.dir</name>
+  <value>file:///tmp/spark/warehouse</value>
+  <description>location of default database for the warehouse</description>
+</property>
+
+<property>
+  <name>fs.s3n.awsAccessKeyId</name>
+  <value>YOUR KEY ID HERE</value>
+  <description></description>
+</property>
+
+<property>
+  <name>fs.s3n.awsSecretAccessKey</name>
+  <value>YOUR KEY HERE</value>
+  <description></description>
+</property>
+
+</configuration>

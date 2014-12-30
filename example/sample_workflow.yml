@@ -1,0 +1,7 @@
+name: Distinct Countries
+phases:
+  - steps:
+    - name: Take First 5
+      path: take5.py
+      args:
+        - {{ argv[0] }}

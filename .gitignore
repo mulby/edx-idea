@@ -52,3 +52,15 @@ docs/_build/
 
 # PyBuilder
 target/
+
+# Hive stuff
+metastore_db/
+derby.log
+
+# iPython stuff
+.ipynb_checkpoints/
+ipython/profile_idea/history.sqlite
+ipython/profile_idea/security/
+ipython/profile_idea/log/
+ipython/profile_idea/pid/
+ipython/local/

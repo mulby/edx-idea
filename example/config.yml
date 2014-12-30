@@ -1,0 +1,24 @@
+engine: spark
+spark:
+    home: {{ env.SPARK_HOME }}
+    master: local[2]
+    python: {{ env.VIRTUAL_ENV }}/bin/python
+logging:
+    version: 1
+    disable_existing_loggers: False
+    formatters:
+        verbose:
+            format: '%(asctime)s %(levelname)s %(process)d [%(name)s] %(filename)s:%(lineno)d - %(message)s'
+    handlers:
+        stderr:
+            formatter: verbose
+            class: logging.StreamHandler
+    root:
+        handlers:
+            - stderr
+        level: DEBUG
+    loggers:
+        py4j:
+            handlers:
+                - stderr
+            level: WARN

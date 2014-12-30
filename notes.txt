@@ -1,0 +1,18 @@
+* selecting tracking logs?
+* scale up
+* supported queries
+* can we fully hide the fact that it's hive under the hood?
+* Sqoop?
+* steps being more structured than scripts, maybe entry points pointing to classes?
+* canned formats? (JSON, CSV, TSV etc)
+* Spark SQL expects row data to be literally instances of the "pyspark.sql.Row" class
+* array, struct and map types
+* multi output
+* Can we read the config file once and then store it in memory?
+* logging from a remote map function?
+* attaching a debugger to a remote map function?
+* profiling a workflow
+* should the user be able to provide the schema to "to_table"?
+* model documentation
+* logging initialization time... when does this happen? be more clear about entry points...
+* see what information is being shipped to the cluster. Am I accidentally shipping a huge amount of data?
