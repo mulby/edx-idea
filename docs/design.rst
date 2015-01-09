@@ -420,6 +420,10 @@ Actions require some or all of the data be available, any necessary computations
 
 Returns a list of the first ``n_records`` of the DataFrame.
 
+``collect()``
+
+Return a list containing all records in the DataFrame.
+
 ``each(each_function)``
 
 ``each_function(record)``
@@ -439,6 +443,8 @@ If ``append == True`` data is appended to the relevant partition (or table) inst
 If the ``schema`` is specified the table is created with that schema and all data within the DataFrame must conform to it. If ``schema`` is not specified, the schema is inferred from the first record in the table. All other records in the DataFrame are assumed to have the same schema as that first record.
 
 In order for data to be saved to a table using this method it must be stored in the DataFrame in such a way that the columns and values for those columns is apparent. This can be done by making every record a ``namedtuple`` or a tuple of tuples in the format ``((column_name, value), (other_column_name, other_value), ...)``, dictionaries are also supported.
+
+If the table does not already exist when this method is called, it is created immediately. If the table already exists and the schema or primary_key settings passed into this method do not match the existing table, a ValueError is raised and no changes are made to the table.
 
 Dependencies
 ============
