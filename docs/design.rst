@@ -496,6 +496,15 @@ Create a DataFrame that contains the results of an SQL query. Note that these re
 Create a DataFrame from a python list of objects in memory.
 
 
+Workflow
+--------
+
+A Workflow represents a sequence of actions that are run together. This typically is a cascading set of updates that are intended to be executed with a particular cadence (once per day, week, month etc).
+
+A Workflow consists of several Phases, which in turn consists of several Tasks. When executing a workflow, the system will run each Phase in order, waiting for it to complete before moving on to the next Phase. Within a Phase, however, the system may choose to execute the tasks however it sees fit, it only guarantees that each task will be executed at least once. Tasks may be executed in parallel within a phase.
+
+This allows for a simple dependency tree to be formed. Note that the system contains no intelligence about what has already been run or what needs to be run etc. It always runs every task within the Workflow, overwriting any data it may have previously produced as output.
+
 Dependencies
 ============
 
