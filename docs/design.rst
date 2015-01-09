@@ -36,7 +36,7 @@ workflow.yml
 
     name: Distinct Countries
     phases:
-      - steps:
+      - tasks:
         - id: edx.task.word_count
           args:
             - "{{ argv[0] }}"
