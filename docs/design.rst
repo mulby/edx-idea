@@ -426,6 +426,19 @@ Returns a list of the first ``n_records`` of the DataFrame.
 
 Executes ``each_function`` on each record in the DataFrame in order. This action is not parallizable and is guaranteed to be executed in an environment where state is preserved. It is intended for use to transfer records out of a DataFrame into another system. It could be used, for example, to build SQL transactions to insert into an RDBMS, or to write records out to a file.
 
+``to_table(table_name, schema=None, primary_key=None, append=False)``
+
+Saves the contents of the DataFrame into a table that can be queried using ``sql_query()``.
+
+If the ``primary_key`` is specified, it is used as the partitioning key when saving the data. For each distinct value of this key found in the data, the entire partition associated with that key will be overwritten. This allows for selective updates to data within the table as long as entire partitions are overwritten.
+
+If the primary_key is not specified, the entire table is overwritten.
+
+If ``append == True`` data is appended to the relevant partition (or table) instead of overwriting it.
+
+If the ``schema`` is specified the table is created with that schema and all data within the DataFrame must conform to it. If ``schema`` is not specified, the schema is inferred from the first record in the table. All other records in the DataFrame are assumed to have the same schema as that first record.
+
+In order for data to be saved to a table using this method it must be stored in the DataFrame in such a way that the columns and values for those columns is apparent. This can be done by making every record a ``namedtuple`` or a tuple of tuples in the format ``((column_name, value), (other_column_name, other_value), ...)``, dictionaries are also supported.
 
 Dependencies
 ============
