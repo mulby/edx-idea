@@ -41,17 +41,17 @@ class Configuration(MapWrapper):
                 break
 
         if cur is None:
-            return kwargs.get('default')
+            if 'default' in kwargs:
+                return kwargs['default']
+            else:
+                raise ValueError('Could not find configuration setting {}'.format('.'.join(keys)))
 
         return cur
 
     def get_env(self, *keys, **kwargs):
-        value = None
         if 'env_var' in kwargs:
             env_var = kwargs.pop('env_var')
-            value = os.getenv(env_var)
+            if env_var in os.environ:
+                return os.environ[env_var]
 
-        if value is None:
-            return self.get_nested(*keys, **kwargs)
-        else:
-            return value
+        return self.get_nested(*keys, **kwargs)

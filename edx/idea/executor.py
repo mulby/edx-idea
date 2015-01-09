@@ -1,5 +1,6 @@
 
 import logging
+from multiprocessing import Pool
 import os
 import sys
 
@@ -18,17 +19,22 @@ class Executor(object):
 
     def __init__(self):
         self.engine = PluginManager().engine
+        self.pool = Pool()
 
     def execute(self, workflow):
         log.info('Executing %s.', str(workflow))
         for phase in workflow.phases:
             log.info('Executing %s.', str(phase))
-            for step in phase.steps:
-                log.info('Executing %s.', str(step))
-                self.engine.run(step)
-                log.info('%s complete.', str(step))
+            self.pool.map(run_task, phase.tasks)
             log.info('%s complete.', str(phase))
         log.info('%s complete.', str(workflow))
+
+
+def run_task(task):
+    engine = PluginManager().engine
+    log.info('Executing %s.', str(task))
+    engine.run(task)
+    log.info('%s complete.', str(task))
 
 
 def main():

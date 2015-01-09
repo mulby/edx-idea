@@ -1,7 +1,17 @@
 name: Distinct Countries
 phases:
-  - steps:
+  - tasks:
     - name: Take First 5
       path: take5.py
       args:
         - {{ argv[0] }}
+    - name: Take 5 of README.md
+      path: take5.py
+      args:
+        - ../README.md
+  - name: Phase 2
+    tasks:
+      - name: Take 5 of setup.py
+        path: take5.py
+        args:
+          - ../setup.py
