@@ -21,6 +21,8 @@ Not addressed (yet)
 ===================
 
 * Streaming and near real time computation.
+* Serving aggregates to the API. There are many different queries that can be run on the general purpose models produced by this framework. I would prefer to implement an independent query caching mechanism that runs these large scale queries and stores the results somewhere that can be rapidly accessed by the API.
+* Replication of models to other systems (like BigQuery/Redshift etc). We will likely want to do this for BI purposes, but it is not handled by this framework.
 
 Example Extension
 =================
@@ -406,6 +408,25 @@ The ``map_generator`` and ``reduce_generator`` may be executed in arbitrary proc
 The ``reduce_generator`` can expect state to preserved throughout the entire processing of the iterator.
 
 
+``map(map_generator)``
+
+``map_generator(record)``
+
+This function behaves identically to the ``map_reduce`` transformation, however, it does not execute a reduce phase. Instead it simply enables parallel processing of every record in the DataFrame and populates the resulting DataFrame with all records that are yielded from the ``map_generator``.
+
+
+``filter(filter_function)``
+
+``filter_function(record)``
+
+This transformation populates the returned DataFrame with all records for which the ``filter_function`` returns ``True``.
+
+
+``union(other_data_frame)``
+
+Returns a DataFrame that is simply the concatenation of the current DataFrame and the other DataFrame.
+
+
 ``sql_query(query)``
 
 Execute a SQL query and return the result as a DataFrame. A subset of SQL queries is supported. The resulting DataFrame will contain records that are formatted as namedtuples where the resulting columns are fields in the tuple.
@@ -445,6 +466,35 @@ If the ``schema`` is specified the table is created with that schema and all dat
 In order for data to be saved to a table using this method it must be stored in the DataFrame in such a way that the columns and values for those columns is apparent. This can be done by making every record a ``namedtuple`` or a tuple of tuples in the format ``((column_name, value), (other_column_name, other_value), ...)``, dictionaries are also supported.
 
 If the table does not already exist when this method is called, it is created immediately. If the table already exists and the schema or primary_key settings passed into this method do not match the existing table, a ValueError is raised and no changes are made to the table.
+
+``count()``
+
+Returns the number of records in the DataFrame.
+
+``cache()``
+
+Provides a hint to the Engine that this DataFrame will be accessed frequently in the near future and that it should attempt to optimize for frequent usage.
+
+
+Construction
+~~~~~~~~~~~~
+
+``from_url(file_url)``
+
+Create a DataFrame from an existing file. The file may be compressed.
+
+``from_table(table_name)``
+
+Create a DataFrame from an existing table. Note that it will contain all records present in the table.
+
+``from_sql_query(query)``
+
+Create a DataFrame that contains the results of an SQL query. Note that these results are represented by namedtuples with a field for each column in the table.
+
+``from_list(data)``
+
+Create a DataFrame from a python list of objects in memory.
+
 
 Dependencies
 ============
